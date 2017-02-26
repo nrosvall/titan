@@ -51,7 +51,7 @@ static Key_t generate_key(const char *passphrase, char *old_salt,
 {
     char *salt = NULL;
     int iterations = 25000;
-    Key_t key;
+    Key_t key = {0};
     int success;
     char *resultbytes[KEY_SIZE];
 
@@ -182,6 +182,7 @@ static bool calculate_and_write_hmac(FILE *fp, const void *key)
     hmac_data(key, KEY_SIZE, (unsigned char *)cipher_buffer,cipherlen,
               (unsigned char *)hmac_sha512, &len);
 
+	fseek(fp, 0, SEEK_END); //TODO: Needed?
     fwrite(hmac_sha512, 1, HMAC_SHA512_SIZE, fp);
 
     free(cipher_buffer);
@@ -426,6 +427,7 @@ bool decrypt_file(const char *passphrase, const char *path)
         free(iv);
         free(salt);
         free(hmac);
+        fclose(cipher);
         return false;
     }
 
