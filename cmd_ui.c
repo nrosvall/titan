@@ -75,6 +75,11 @@ static size_t my_getpass(char *prompt, char **lineptr, size_t *n, FILE *stream)
     return nread;
 }
 
+static void auto_encrypt()
+{
+    encrypt_database();
+}
+
 void init_database(const char *path, int force, int auto_encrypt)
 {
     if(!has_active_database() || force == 1)
@@ -87,13 +92,19 @@ void init_database(const char *path, int force, int auto_encrypt)
         }
             
         if(db_init_new(path))
+        {
             write_active_database_path(path);
+            
+            if(auto_encrypt == 1)
+                auto_encrypt();
+        }
     }
     else
     {
         fprintf(stderr, "Existing database is already active. "
                 "Encrypt it before creating a new one.\n");
     }
+    
 }
 
 void decrypt_database(const char *path)
@@ -217,6 +228,9 @@ bool add_new_entry(int auto_encrypt)
 
     entry_free(entry);
 
+    if(auto_encrypt == 1)
+        auto_encrypt();
+
     return true;
 }
 
@@ -300,6 +314,9 @@ bool edit_entry(int id, int auto_encrypt)
 
     entry_free(entry);
 
+    if(auto_encrypt == 1)
+        auto_encrypt();
+
     return true;
 }
 
@@ -322,6 +339,9 @@ bool remove_entry(int id, int auto_encrypt)
 
         return true;
     }
+
+    if(auto_encrypt == 1)
+        auto_encrypt();
 
     return false;
 }
@@ -361,6 +381,9 @@ void list_by_id(int id, int show_password, int auto_encrypt)
 
     fprintf(stdout, "=====================================================================\n");
     entry_free(entry);
+
+    if(auto_encrypt == 1)
+        auto_encrypt();
 }
 
 /* Loop through all entries in the database.
@@ -377,6 +400,9 @@ void list_all(int show_password, int auto_encrypt)
     }
 
     db_list_all(show_password);
+
+    if(auto_encrypt == 1)
+        auto_encrypt();
 }
 
 /* Uses sqlite "like" query and prints results to stdout.
@@ -392,6 +418,9 @@ void find(const char *search, int show_password, int auto_encrypt)
     }
 
     db_find(search, show_password);
+
+    if(auto_encrypt == 1)
+        auto_encrypt();
 }
 
 void show_current_db_path()
