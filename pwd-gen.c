@@ -77,6 +77,8 @@ void generate_password(int length)
         pass[j] = alpha[number];
     }
 
+	pass[length] = '\0';
+
     fprintf(stdout, "%s\n", pass);
     free(pass);
 }
