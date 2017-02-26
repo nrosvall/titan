@@ -182,7 +182,7 @@ static bool calculate_and_write_hmac(FILE *fp, const void *key)
     hmac_data(key, KEY_SIZE, (unsigned char *)cipher_buffer,cipherlen,
               (unsigned char *)hmac_sha512, &len);
 
-	fseek(fp, 0, SEEK_END); //TODO: Needed?
+	fseek(fp, 0, SEEK_END);
     fwrite(hmac_sha512, 1, HMAC_SHA512_SIZE, fp);
 
     free(cipher_buffer);
