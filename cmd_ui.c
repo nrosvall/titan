@@ -144,6 +144,8 @@ void encrypt_database()
     size_t pwdlen = 1024;
     char pass[pwdlen];
     char *ptr = pass;
+    char pass2[pwdlen];
+    char *ptr2 = pass2;
     char *path = NULL;
     char *lockfile_path = NULL;
     
@@ -156,6 +158,14 @@ void encrypt_database()
     }
     
     my_getpass("Password: ", &ptr, &pwdlen, stdin);
+    my_getpass("Password again: ", &ptr2, &pwdlen, stdin);
+
+    if(strcmp(pass, pass2) != 0)
+    {
+        fprintf(stderr, "Password mismatch.\n");
+        free(path);
+        return;
+    }
     
     //TODO: ask the pass twice to make sure user typed it correctly
     
