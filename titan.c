@@ -155,8 +155,7 @@ int main(int argc, char *argv[])
         case 'q':
             auto_encrypt = 1;
             show_password = 1;
-            find(optarg, show_password, auto_encrypt); //TODO: implement auto_encrypt. it's only possible to use it if database is encrypted
-            //first decrypt, then keep the passphrase in a stack and use it to encrypt after the operation
+            find(optarg, show_password, auto_encrypt); //TODO: implement auto_encrypt.
             break;
         case '?':
             usage();
