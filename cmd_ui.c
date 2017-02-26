@@ -75,8 +75,9 @@ static size_t my_getpass(char *prompt, char **lineptr, size_t *n, FILE *stream)
     return nread;
 }
 
-static void auto_encrypt()
+static void auto_enc()
 {
+    fprintf(stdout, "Auto encrypt enabled, type password to encrypt.\n");
     encrypt_database();
 }
 
@@ -96,7 +97,7 @@ void init_database(const char *path, int force, int auto_encrypt)
             write_active_database_path(path);
             
             if(auto_encrypt == 1)
-                auto_encrypt();
+                auto_enc();
         }
     }
     else
@@ -229,7 +230,7 @@ bool add_new_entry(int auto_encrypt)
     entry_free(entry);
 
     if(auto_encrypt == 1)
-        auto_encrypt();
+        auto_enc();
 
     return true;
 }
@@ -315,7 +316,7 @@ bool edit_entry(int id, int auto_encrypt)
     entry_free(entry);
 
     if(auto_encrypt == 1)
-        auto_encrypt();
+        auto_enc();
 
     return true;
 }
@@ -341,7 +342,7 @@ bool remove_entry(int id, int auto_encrypt)
     }
 
     if(auto_encrypt == 1)
-        auto_encrypt();
+        auto_enc();
 
     return false;
 }
@@ -383,7 +384,7 @@ void list_by_id(int id, int show_password, int auto_encrypt)
     entry_free(entry);
 
     if(auto_encrypt == 1)
-        auto_encrypt();
+        auto_enc();
 }
 
 /* Loop through all entries in the database.
@@ -402,7 +403,7 @@ void list_all(int show_password, int auto_encrypt)
     db_list_all(show_password);
 
     if(auto_encrypt == 1)
-        auto_encrypt();
+        auto_enc();
 }
 
 /* Uses sqlite "like" query and prints results to stdout.
@@ -420,7 +421,7 @@ void find(const char *search, int show_password, int auto_encrypt)
     db_find(search, show_password);
 
     if(auto_encrypt == 1)
-        auto_encrypt();
+        auto_enc();
 }
 
 void show_current_db_path()
