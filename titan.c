@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
         case 'q':
             auto_encrypt = 1;
             show_password = 1;
-            find(optarg, show_password, auto_encrypt); //TODO: implement auto_encrypt.
+            find(optarg, show_password, auto_encrypt);
             break;
         case '?':
             usage();
