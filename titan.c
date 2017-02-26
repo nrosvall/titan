@@ -19,7 +19,7 @@ static int auto_encrypt = 0;
 
 static void version()
 {
-    printf("Titan version 0.9\n");
+    printf("Titan version 1.0\n");
 }
 
 static void usage()
