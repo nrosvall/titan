@@ -108,14 +108,14 @@ void init_database(const char *path, int force, int auto_encrypt)
     
 }
 
-void decrypt_database(const char *path)
+bool decrypt_database(const char *path)
 {
     if(has_active_database())
     {
         fprintf(stderr, "Existing database is already active. "
                 "Encrypt it before decrypting another one.\n");
                 
-        return;
+        return false;
     }
     
     size_t pwdlen = 1024;
@@ -127,18 +127,20 @@ void decrypt_database(const char *path)
     if(!decrypt_file(pass, path))
     {
         fprintf(stderr, "Failed to decrypt %s.\n", path);
-        return;
+        return false;
     }
     
     write_active_database_path(path);
+
+    return true;
 }
 
-void encrypt_database()
+bool encrypt_database()
 {
     if(!has_active_database())
     {
         fprintf(stderr, "No decrypted database found.\n");
-        return;
+        return false;
     }
     
     size_t pwdlen = 1024;
@@ -154,7 +156,7 @@ void encrypt_database()
     if(!path)
     {
         fprintf(stderr, "Unable to read activate database path.\n");
-        return;
+        return false;
     }
     
     my_getpass("Password: ", &ptr, &pwdlen, stdin);
@@ -164,14 +166,14 @@ void encrypt_database()
     {
         fprintf(stderr, "Password mismatch.\n");
         free(path);
-        return;
+        return false;
     }
         
     if(!encrypt_file(pass, path))
     {
         fprintf(stderr, "Encryption of %s failed.\n", path);
         free(path);
-        return;
+        return false;
     }
     
     free(path);
@@ -181,13 +183,15 @@ void encrypt_database()
     if(!lockfile_path)
     {
         fprintf(stderr, "Unable to retrieve the lock file path.\n");
-        return;
+        return false;
     }
     
     //Finally delete the file that holds the activate database path.
     //This way we allow Titan to create a new database or open another one.
     unlink(lockfile_path);
     free(lockfile_path);
+
+    return true;
 }
 
 /* Interactively adds a new entry to the database */
@@ -453,9 +457,20 @@ void set_use_db(const char *path)
 {
     if(has_active_database())
     {
-        fprintf(stderr, "Current database is decrypted, encrypt it first.\n");
-        return;
+        fprintf(stdout,
+            "Type password to encrypt existing active database.\n");
+            
+        if(!encrypt_database())
+            return;
     }
 
+    if(is_file_encrypted(path))
+    {
+        fprintf(stdout, "Decrypt %s.\n", path);
+        
+        if(!decrypt_database(path))
+            return;
+    }
+    
     write_active_database_path(path);
 }

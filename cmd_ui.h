@@ -15,7 +15,7 @@ void find(const char *search, int show_password, int auto_encrypt);
 void show_current_db_path();
 void set_use_db(const char *path);
 
-void decrypt_database(const char *path);
-void encrypt_database();
+bool decrypt_database(const char *path);
+bool encrypt_database();
 
 #endif
