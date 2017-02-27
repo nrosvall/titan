@@ -1,5 +1,3 @@
-!!! Titan is under heavy development and not officially available just yet. !!!
-
 Titan - Command line password manager
 
 Password management belongs to the command line, deep into the Unix heartland,
@@ -33,5 +31,7 @@ sudo apt-get install libssl-dev
 cd titan
 make
 sudo make install
+
+For documentation see titan --help and man titan(1).
 
 
