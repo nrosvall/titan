@@ -166,9 +166,7 @@ void encrypt_database()
         free(path);
         return;
     }
-    
-    //TODO: ask the pass twice to make sure user typed it correctly
-    
+        
     if(!encrypt_file(pass, path))
     {
         fprintf(stderr, "Encryption of %s failed.\n", path);
