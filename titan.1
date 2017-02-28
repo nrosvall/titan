@@ -7,82 +7,69 @@ titan \- command line password manager
 .SH SYNOPSIS
 steel [FLAGS] <OPTIONS>
 .SH DESCRIPTION
-Steel is a command line password manager for Unix like
+Titan is a command line password manager for Unix like
 operating systems.
 .SH OPTIONS
-.IP "-i, --init-new <path>"
-Create a new database
-.IP "-o, --open <path>"
-Open an existing database
-.IP "-c, --close"
-Close open database
-.IP "-a, --add <title> <user> <url> <notes>"
-Add new entry to database
+.IP "-i, --init <path>"
+Initialize new database
+.IP "-e, --encrypt"
+Encrypt current database
+.IP "-d, --decrypt <path>"
+Decrypt database
+.IP "-a, --add"
+Add new entry
 .IP "-a, --add -I"
 Add new entry to database interactively
-.IP "-g, --gen-pass <length> [count]"
-Generate secure password
-.IP "-d, --delete <id>"
-Delete an entry by id
-.IP "-e, --edit <id> <what> [new content]"
-Edit an entry data. <what> can be either
-"user", "title", "url", "notes" or "passphrase".
-For "passphrase" content is not needed.
-.IP "-e, --edit -I <id>"
-Edit an entry interactively.
-.IP "-R, --rm-db <path>"
-Remove database.
-is used.
+.IP "-s, --show-db-path"
+Show current database path
+.IP "-u, --use-db <path>"
+Switch using another database
+.IP "-r, --remove <id>"
+Remove entry pointed by id
+.IP "-f, --find <search>"
+Search for entries
+.IP "-c, --edit <id>"
+Edit entry pointed by id
 .IP "-f, --find <search>"
 Search database
-.IP "-l, --list-all"
-Show all entries
-.IP "-S, --show-status"
+.IP "-l, --list-entry <id>"
+List entry pointed by id
+.IP "-A, --list-all"
 Show database statuses
-.IP "-b, --backup <source> <destination>"
-Backup database
-.IP "-B, --import-backup <source> <destionation>"
-Import database backup
 .IP "-V, --version"
 Show program version
-.IP "-p, --show-passphrase <id>"
-Show an entry passphrase
-.IP "-u, --show-username <id>"
-Show an entry username
-.IP "-U, --show-url <id>"
-Show an entry url
-.IP "-n, --show-notes <id>"
-Show an entry notes
+.IP "-g, --gen-password <length>"
+Generate password
+.IP "-q, --quick <search>"
+This is the same as running
+--auto-encrypt --show-passwords -f
 .IP "-h, --help"
 Show short help and exit
 .SH FLAGS
-.IP "-w, --with-passphrases"
-Show passphrases in listings
+.IP "--auto-encrypt"
+Automatically encrypt after exit
+.IP "--show-passwords"
+Show passwords in listings
+.IP "--force"
+--force only works with --init option
 .SH EXAMPLES
 Create a new database:
-       steel --init-new "/path/to/file.db"
+       titan --init "/path/to/file.db"
 .PP
 Open and decrypt database:
-       steel --open "/path/to/existing/file.db"
+       titan --decrypt "/path/to/existing/file.db"
 .PP
 Close and encrypt database:
-       steel --close
-Steel knows what database is currently open and encrypts it.
-Close will ask you to type a master passphrase which is used for encryption.
+       titan --encrypt
+
+Titan knows what database is currently active and encrypts it.
+Encrypting will ask you to type a master passphrase which is used for encryption.
 .PP
 Add an entry to an open database:
-       steel --add "My new entry" "My username" "Url" "Some important notes"
-All fields are optional except the title field.
-If you don't to insert for example an url, just empty quotes "".
-.PP
-Replace url in an entry:
-       steel --edit 4 "url" "http://www.newurl.com"
-.PP
-Display on passphrase of an existing entry:
-       steel --show-passphrase 4
+       steel --add
 .PP
 If you want to export all entries to a file:
-       titan --show-password -A > file.txt
+       titan --show-passwords -A > file.txt
 .SH NOTES
 Titan does not have a concept of "change the master password". When you encrypt
 an open database using --encrypt you can type a master password. This password
