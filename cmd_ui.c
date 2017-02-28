@@ -15,6 +15,7 @@
 #include "db.h"
 #include "utils.h"
 #include "crypto.h"
+#include "pwd-gen.h"
 
 extern int fileno(FILE *stream);
 
@@ -34,6 +35,24 @@ static void strip_newline_str(char *str)
     }
 
     *i = '\0';
+}
+
+/* Function assumes that the in_buffer has enough space.
+ */
+static void generate_new_password(char *in_buffer)
+{
+    char *new_pass = NULL;
+    new_pass = generate_password(16);
+
+    if(!new_pass)
+    {
+        fprintf(stderr, "WARNING: Unable to generate new password.\n");
+    }
+    else
+    {
+        strcpy(in_buffer, new_pass);
+        free(new_pass);
+    }
 }
 
 /*Turns echo of from the terminal and asks for a passphrase.
@@ -220,7 +239,10 @@ bool add_new_entry(int auto_encrypt)
     fprintf(stdout, "Notes: ");
     fgets(notes, 1024, stdin);
 
-    my_getpass("Password: ", &ptr, &pwdlen, stdin);
+    my_getpass("Password (empty to generate new): ", &ptr, &pwdlen, stdin);
+
+    if(strcmp(pass, "") == 0)
+        generate_new_password(pass);
 
     strip_newline_str(title);
     strip_newline_str(user);
@@ -289,7 +311,11 @@ bool edit_entry(int id, int auto_encrypt)
     fprintf(stdout, "New note: ");
     fgets(notes, 1024, stdin);
     fprintf(stdout, "Current password %s\n", entry->password);
-    my_getpass("New password: ", &ptr, &pwdlen, stdin);
+    my_getpass("New password (empty to generate new): ", &ptr, &pwdlen,
+            stdin);
+
+    if(strcmp(pass, "") == 0)
+        generate_new_password(pass);
 
     strip_newline_str(title);
     strip_newline_str(user);

@@ -40,11 +40,13 @@ static unsigned int rand_between(unsigned int min, unsigned int max)
 /* Simply generate secure password
  * and output it to the stdout, use clock_gettime for
  * seeding srand
+ *
+ * Caller must free the return value.
  */
-void generate_password(int length)
+char *generate_password(int length)
 {
     if(length < 1 || length > RAND_MAX)
-        return;
+        return NULL;
 
     char *pass = NULL;
     char *alpha = "abcdefghijklmnopqrstuvwxyz" \
@@ -80,5 +82,6 @@ void generate_password(int length)
 	pass[length] = '\0';
 
     fprintf(stdout, "%s\n", pass);
-    free(pass);
+
+    return pass;
 }
