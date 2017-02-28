@@ -19,7 +19,13 @@ clean:
 	rm -f $(PROG)
 
 install: all
+	if [ ! -d $(PREFIX)/share/man/man1 ];then	\
+		mkdir -p $(PREFIX)/share/man/man1;	\
+	fi
+	cp titan.1 $(PREFIX)/share/man/man1/
+	gzip -f $(PREFIX)/share/man/man1/titan.1
 	cp titan $(PREFIX)/bin/
 
 uninstall:
 	rm $(PREFIX)/bin/titan
+	rm $(PREFIX)/share/man/man1/titan.1.gz
