@@ -36,7 +36,7 @@ OPTIONS\n\
     -d --decrypt      <path>         Decrypt database\n\
     -a --add                         Add new entry\n\
     -s --show-db-path                Show current database path\n\
-    -u --use-db                      Switch using another database\n\
+    -u --use-db       <path>         Switch using another database\n\
     -r --remove       <id>           Remove entry pointed by id\n\
     -f --find         <search>       Search entries\n\
     -c --edit         <id>           Edit entry pointed by id\n\
