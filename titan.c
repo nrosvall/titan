@@ -21,7 +21,7 @@ static double v = 1.1;
 
 static void version()
 {
-    printf("Titan version %f\n", v);
+    printf("Titan version %.1f\n", v);
 }
 
 static void usage()
