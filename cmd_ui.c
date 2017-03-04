@@ -22,7 +22,6 @@ extern int fileno(FILE *stream);
 /*Removes new line character from a string.*/
 static void strip_newline_str(char *str)
 {
-
     char *i = str;
     char *j = str;
 
@@ -110,11 +109,11 @@ void init_database(const char *path, int force, int auto_encrypt)
             if(file_exists(path))
                 unlink(path);
         }
-            
+
         if(db_init_new(path))
         {
             write_active_database_path(path);
-            
+
             if(auto_encrypt == 1)
                 auto_enc();
         }
@@ -124,7 +123,7 @@ void init_database(const char *path, int force, int auto_encrypt)
         fprintf(stderr, "Existing database is already active. "
                 "Encrypt it before creating a new one.\n");
     }
-    
+
 }
 
 bool decrypt_database(const char *path)
@@ -133,22 +132,22 @@ bool decrypt_database(const char *path)
     {
         fprintf(stderr, "Existing database is already active. "
                 "Encrypt it before decrypting another one.\n");
-                
+
         return false;
     }
-    
+
     size_t pwdlen = 1024;
     char pass[pwdlen];
     char *ptr = pass;
-    
+
     my_getpass("Password: ", &ptr, &pwdlen, stdin);
-    
+
     if(!decrypt_file(pass, path))
     {
         fprintf(stderr, "Failed to decrypt %s.\n", path);
         return false;
     }
-    
+
     write_active_database_path(path);
 
     return true;
@@ -161,7 +160,7 @@ bool encrypt_database()
         fprintf(stderr, "No decrypted database found.\n");
         return false;
     }
-    
+
     size_t pwdlen = 1024;
     char pass[pwdlen];
     char *ptr = pass;
@@ -169,15 +168,15 @@ bool encrypt_database()
     char *ptr2 = pass2;
     char *path = NULL;
     char *lockfile_path = NULL;
-    
+
     path = read_active_database_path();
-    
+
     if(!path)
     {
         fprintf(stderr, "Unable to read activate database path.\n");
         return false;
     }
-    
+
     my_getpass("Password: ", &ptr, &pwdlen, stdin);
     my_getpass("Password again: ", &ptr2, &pwdlen, stdin);
 
@@ -187,24 +186,24 @@ bool encrypt_database()
         free(path);
         return false;
     }
-        
+
     if(!encrypt_file(pass, path))
     {
         fprintf(stderr, "Encryption of %s failed.\n", path);
         free(path);
         return false;
     }
-    
+
     free(path);
-    
+
     lockfile_path = get_lockfile_path();
-    
+
     if(!lockfile_path)
     {
         fprintf(stderr, "Unable to retrieve the lock file path.\n");
         return false;
     }
-    
+
     //Finally delete the file that holds the activate database path.
     //This way we allow Titan to create a new database or open another one.
     unlink(lockfile_path);
@@ -398,7 +397,6 @@ void list_by_id(int id, int show_password, int auto_encrypt)
     if(!entry)
         return;
 
-
     if(entry->id == -1)
     {
         printf("Nothing found with id %d.\n", id);
@@ -485,7 +483,7 @@ void set_use_db(const char *path)
     {
         fprintf(stdout,
             "Type password to encrypt existing active database.\n");
-            
+
         if(!encrypt_database())
             return;
     }
@@ -493,10 +491,10 @@ void set_use_db(const char *path)
     if(is_file_encrypted(path))
     {
         fprintf(stdout, "Decrypt %s.\n", path);
-        
+
         if(!decrypt_database(path))
             return;
     }
-    
+
     write_active_database_path(path);
 }

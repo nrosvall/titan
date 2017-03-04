@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <regex.h>
 #include "regexfind.h"
+#include "entry.h"
 
 void regex_find(const char *search)
 {

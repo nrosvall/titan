@@ -23,8 +23,7 @@ static int cb_find(void *show_password, int argc, char **argv, char **column_nam
  *malformed and corrupted databases. Returns true
  *if everything is ok, false if something is wrong.
  */
-static bool
-db_check_integrity(const char *path)
+static bool db_check_integrity(const char *path)
 {
     sqlite3 *db;
     char *err = NULL;
@@ -216,8 +215,7 @@ bool db_update_entry(int id, Entry_t *new_entry)
 /*Get entry which has the wanted id.
  * Caller must free the return value.
  */
-Entry_t *
-db_get_entry_by_id(int id)
+Entry_t *db_get_entry_by_id(int id)
 {
     char *path = NULL;
     sqlite3 *db;
@@ -521,8 +519,7 @@ static int cb_find(void *show_password, int argc, char **argv, char **column_nam
     return 0;
 }
 
-static int
-cb_get_by_id(void *entry, int argc, char **argv, char **column_name)
+static int cb_get_by_id(void *entry, int argc, char **argv, char **column_name)
 {
     /*Let's not allow NULLs*/
     if(argv[0] == NULL)

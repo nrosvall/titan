@@ -17,9 +17,11 @@ static int show_password = 0;
 static int force = 0;
 static int auto_encrypt = 0;
 
+static double v = 1.1;
+
 static void version()
 {
-    printf("Titan version 1.0\n");
+    printf("Titan version %f\n", v);
 }
 
 static void usage()
