@@ -303,7 +303,7 @@ bool encrypt_file(const char *passphrase, const char *path)
     }
 
     fseek(plain, 0, SEEK_END);
-    int plain_len = ftell(plain);
+    size_t plain_len = ftell(plain);
     fseek(plain, 0, SEEK_SET);
 
     plain_data = tmalloc(plain_len * sizeof(char));

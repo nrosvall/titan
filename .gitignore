@@ -2,3 +2,6 @@
 titan
 TAGS
 *.geany
+Titan.vcxproj*
+bin/
+obj/
