@@ -1,7 +1,7 @@
 CC=gcc
 override CFLAGS+=-std=c99 -Wall -g
 PREFIX=/usr/
-LIBS=-lcrypto -lsqlite3
+LIBS=-lcrypto -lsqlite3 -lrt
 PROG=titan
 OBJS=$(patsubst %.c, %.o, $(wildcard *.c))
 HEADERS=$(wildcard *.h)
