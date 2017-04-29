@@ -28,23 +28,50 @@ Entry_t *entry_new(const char *title, const char *user,
     new->password = strdup(password);
     new->notes = strdup(notes);
     new->stamp = NULL;
+    new->next = NULL;
 
     return new;
 }
 
+/* Add new entry to the end of the list. Returns the currently added entry */
+Entry_t *entry_add(Entry_t *head, const char *title, const char *user,
+                   const char *url, const char *password, const char *notes)
+{
+    if(head == NULL)
+    {
+        return head = entry_new(title, user, url, password, notes);
+    }
+
+    Entry_t *cur = head;
+
+    /* Walk until we're in the end of the list */
+    while(cur->next != NULL)
+        cur = cur->next;
+
+    Entry_t *new = entry_new(title, user, url, password, notes);
+    cur->next = new;
+
+    return cur->next;
+}
+
 void entry_free(Entry_t *entry)
 {
-    if(!entry)
-        return;
+    Entry_t *cur;
 
-    free(entry->title);
-    free(entry->user);
-    free(entry->url);
-    free(entry->password);
-    free(entry->notes);
+    while(entry != NULL)
+    {
+        cur = entry;
+        entry = entry->next;
 
-    if(entry->stamp)
-        free(entry->stamp);
+        free(cur->title);
+        free(cur->user);
+        free(cur->url);
+        free(cur->password);
+        free(cur->notes);
 
-    free(entry);
+        if(cur->stamp)
+            free(cur->stamp);
+
+        free(cur);
+    }
 }

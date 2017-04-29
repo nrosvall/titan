@@ -12,6 +12,7 @@ bool remove_entry(int id, int auto_encrypt);
 void list_by_id(int id, int show_password, int auto_encrypt);
 void list_all(int show_password, int auto_encrypt);
 void find(const char *search, int show_password, int auto_encrypt);
+void find_regex(const char *regex, int show_password);
 void show_current_db_path();
 void set_use_db(const char *path);
 

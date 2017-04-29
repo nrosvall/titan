@@ -41,6 +41,7 @@ OPTIONS\n\
     -u --use-db       <path>         Switch using another database\n\
     -r --remove       <id>           Remove entry pointed by id\n\
     -f --find         <search>       Search entries\n\
+    -F --regex        <search>       Search entries with regular expressions\n\
     -c --edit         <id>           Edit entry pointed by id\n\
     -l --list-entry   <id>           List entry pointed by id\n\
     -A --list-all                    List all entries\n\
@@ -86,6 +87,7 @@ int main(int argc, char *argv[])
             {"add",                   no_argument,       0, 'a'},
             {"remove",                required_argument, 0, 'r'},
             {"find",                  required_argument, 0, 'f'},
+            {"regex",                 required_argument, 0, 'F'},
             {"edit",                  required_argument, 0, 'c'},
             {"list-entry",            required_argument, 0, 'l'},
             {"use-db",                required_argument, 0, 'u'},
@@ -103,7 +105,7 @@ int main(int argc, char *argv[])
 
         int option_index = 0;
 
-        c = getopt_long(argc, argv, "i:d:ear:f:c:l:Asu:hVg:q:", long_options, &option_index);
+        c = getopt_long(argc, argv, "i:d:ear:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
 
         if(c == -1)
             break;
@@ -138,6 +140,9 @@ int main(int argc, char *argv[])
             set_use_db(optarg);
         case 'f':
             find(optarg, show_password, auto_encrypt);
+            break;
+        case 'F':
+            find_regex(optarg, show_password);
             break;
         case 'c':
             edit_entry(atoi(optarg), auto_encrypt);

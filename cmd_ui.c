@@ -16,6 +16,7 @@
 #include "utils.h"
 #include "crypto.h"
 #include "pwd-gen.h"
+#include "regexfind.h"
 
 extern int fileno(FILE *stream);
 
@@ -423,11 +424,7 @@ void list_by_id(int id, int show_password, int auto_encrypt)
         auto_enc();
 }
 
-/* Loop through all entries in the database.
- * At the moment printing to stdout is handled by sqlite callback.
- * While it's ok for the command line, but if we ever need GUI
- * then this needs to be designed better using a linked list etc.
- */
+/* Loop through all entries in the database and output them to stdout.*/
 void list_all(int show_password, int auto_encrypt)
 {
     if(!has_active_database())
@@ -436,10 +433,35 @@ void list_all(int show_password, int auto_encrypt)
         return;
     }
 
-    db_list_all(show_password);
+    Entry_t *entry = db_get_list();
+    /* Because of how sqlite callbacks work, we need to initialize the list with dummy data.
+     * Skip the dummy data to the next entry in the list
+     */
+    Entry_t *head = entry->next;
+
+    while(head != NULL)
+    {
+        fprintf(stdout, "=====================================================================\n");
+        fprintf(stdout, "ID: %d\n",        head->id);
+        fprintf(stdout, "Title: %s\n",     head->title);
+        fprintf(stdout, "User: %s\n",      head->user);
+        fprintf(stdout, "Url: %s\n",       head->url);
+
+        if(show_password == 1)
+            fprintf(stdout, "Password: %s\n", head->password);
+        else
+            fprintf(stdout, "Password: **********\n");
+
+        fprintf(stdout, "Notes: %s\n",     head->notes);
+        fprintf(stdout, "Modified: %s\n",  head->stamp);
+        fprintf(stdout, "=====================================================================\n");
+        head = head->next;
+    }
 
     if(auto_encrypt == 1)
         auto_enc();
+
+    entry_free(entry);
 }
 
 /* Uses sqlite "like" query and prints results to stdout.
@@ -458,6 +480,16 @@ void find(const char *search, int show_password, int auto_encrypt)
 
     if(auto_encrypt == 1)
         auto_enc();
+}
+
+void find_regex(const char *regex, int show_password)
+{
+    Entry_t *list = db_get_list();
+    Entry_t *head = list->next;
+
+    regex_find(head, regex, show_password);
+
+    entry_free(list);
 }
 
 void show_current_db_path()

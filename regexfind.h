@@ -5,6 +5,7 @@
  #ifndef __REGEXFIND_H
  #define __REGEXFIND_H
 
-void regex_find(const char *search);
+void regex_find(Entry_t *head, const char *search, 
+    int show_password);
 
  #endif
