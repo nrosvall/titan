@@ -56,22 +56,22 @@ Entry_t *entry_add(Entry_t *head, const char *title, const char *user,
 
 void entry_free(Entry_t *entry)
 {
-    Entry_t *cur;
+    Entry_t *tmp;
 
     while(entry != NULL)
     {
-        cur = entry;
-        entry = entry->next;
+        tmp = entry->next;
 
-        free(cur->title);
-        free(cur->user);
-        free(cur->url);
-        free(cur->password);
-        free(cur->notes);
+        free(entry->title);
+        free(entry->user);
+        free(entry->url);
+        free(entry->password);
+        free(entry->notes);
 
-        if(cur->stamp)
-            free(cur->stamp);
+        if(entry->stamp)
+            free(entry->stamp);
 
-        free(cur);
+        free(entry);
+        entry = tmp;
     }
 }

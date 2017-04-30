@@ -533,6 +533,7 @@ static int cb_get_by_id(void *entry, int argc, char **argv, char **column_name)
     ((Entry_t *)entry)->password = strdup(argv[4]);
     ((Entry_t *)entry)->notes = strdup(argv[5]);
     ((Entry_t *)entry)->stamp = strdup(argv[6]);
+    ((Entry_t *)entry)->next = NULL;
 
     return 0;
 }
