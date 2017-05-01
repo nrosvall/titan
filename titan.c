@@ -67,6 +67,9 @@ AUTHORS\n\
     printf(HELP);
 }
 
+//TODO: Implement colors for listing, maybe bold font etc.
+//Use environment variable TITAN_COLOR to set the color
+//https://stackoverflow.com/questions/3585846/color-text-in-terminal-applications-in-unix
 int main(int argc, char *argv[])
 {
     int c;
