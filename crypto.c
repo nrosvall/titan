@@ -11,7 +11,6 @@
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
 #include "crypto.h"
-#include "entry.h"
 #include "utils.h"
 
 //Our magic number that's written into the
@@ -440,7 +439,7 @@ bool decrypt_file(const char *passphrase, const char *path)
         free(iv);
         free(salt);
         free(hmac);
-        
+
         return false;
     }
 

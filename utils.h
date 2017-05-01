@@ -7,6 +7,7 @@
 #define __UTILS_H
 
 #include <stdbool.h>
+#include "entry.h"
 
 bool print_entry(Entry_t *entry, int show_password);
 char *get_lockfile_path();
