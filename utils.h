@@ -8,6 +8,7 @@
 
 #include <stdbool.h>
 
+bool print_entry(Entry_t *entry, int show_password);
 char *get_lockfile_path();
 void write_active_database_path(const char *db_path);
 char *read_active_database_path();

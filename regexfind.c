@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <regex.h>
 #include "entry.h"
+#include "utils.h"
 #include "regexfind.h"
 
 void regex_find(Entry_t *head, const char *search, int show_password)
@@ -30,20 +31,7 @@ void regex_find(Entry_t *head, const char *search, int show_password)
         if(retval == 0)
         {
             /* We have a match */
-            fprintf(stdout, "=====================================================================\n");
-            fprintf(stdout, "ID: %d\n",        head->id);
-            fprintf(stdout, "Title: %s\n",     head->title);
-            fprintf(stdout, "User: %s\n",      head->user);
-            fprintf(stdout, "Url: %s\n",       head->url);
-
-            if(show_password == 1)
-                fprintf(stdout, "Password: %s\n", head->password);
-            else
-                fprintf(stdout, "Password: **********\n");
-
-            fprintf(stdout, "Notes: %s\n",     head->notes);
-            fprintf(stdout, "Modified: %s\n",  head->stamp);
-            fprintf(stdout, "=====================================================================\n");
+            print_entry(head, show_password);
         }
 
         head = head->next;

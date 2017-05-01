@@ -9,8 +9,27 @@
 #include <stdbool.h>
 #include <string.h>
 #include <sys/stat.h>
+#include "entry.h"
 #include "utils.h"
 #include "crypto.h"
+
+
+bool print_entry(Entry_t *entry, int show_password)
+{
+    fprintf(stdout, "=====================================================================\n");
+    fprintf(stdout, "ID: %d\n",        entry->id);
+    fprintf(stdout, "Title: %s\n",     entry->title);
+    fprintf(stdout, "User: %s\n",      entry->user);
+    fprintf(stdout, "Url: %s\n",       entry->url);
+    if(show_password == 1)
+        fprintf(stdout, "Password: %s\n", entry->password);
+    else
+        fprintf(stdout, "Password: **********\n");
+    fprintf(stdout, "Notes: %s\n",     entry->notes);
+    fprintf(stdout, "Modified: %s\n",  entry->stamp);
+    fprintf(stdout, "=====================================================================\n");
+    return 0;
+}
 
 bool file_exists(const char *path)
 {

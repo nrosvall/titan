@@ -405,19 +405,7 @@ void list_by_id(int id, int show_password, int auto_encrypt)
         return;
     }
 
-    fprintf(stdout, "=====================================================================\n");
-    fprintf(stdout, "Title: %s\n", entry->title);
-    fprintf(stdout, "User:  %s\n", entry->user);
-    fprintf(stdout, "Url:   %s\n", entry->url);
-    fprintf(stdout, "Notes: %s\n", entry->notes);
-    fprintf(stdout, "Modified: %s\n", entry->stamp);
-
-    if(show_password == 1)
-        fprintf(stdout, "Password: %s\n", entry->password);
-    else
-        fprintf(stdout, "Password: **********\n");
-
-    fprintf(stdout, "=====================================================================\n");
+    print_entry(entry, show_password);
     entry_free(entry);
 
     if(auto_encrypt == 1)
@@ -441,20 +429,7 @@ void list_all(int show_password, int auto_encrypt)
 
     while(head != NULL)
     {
-        fprintf(stdout, "=====================================================================\n");
-        fprintf(stdout, "ID: %d\n",        head->id);
-        fprintf(stdout, "Title: %s\n",     head->title);
-        fprintf(stdout, "User: %s\n",      head->user);
-        fprintf(stdout, "Url: %s\n",       head->url);
-
-        if(show_password == 1)
-            fprintf(stdout, "Password: %s\n", head->password);
-        else
-            fprintf(stdout, "Password: **********\n");
-
-        fprintf(stdout, "Notes: %s\n",     head->notes);
-        fprintf(stdout, "Modified: %s\n",  head->stamp);
-        fprintf(stdout, "=====================================================================\n");
+        print_entry(head, show_password);
         head = head->next;
     }
 

@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "utils.h"
 #include "entry.h"
+#include "utils.h"
 
 /* Allocate and return a new entry containing data.
    Called must free the return value.

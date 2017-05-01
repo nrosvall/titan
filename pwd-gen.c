@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
+#include "entry.h"
 #include "utils.h"
 #ifdef __MACH__
 #include <mach/clock.h>
