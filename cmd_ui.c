@@ -18,8 +18,6 @@
 #include "pwd-gen.h"
 #include "regexfind.h"
 
-extern int fileno(FILE *stream);
-
 /*Removes new line character from a string.*/
 static void strip_newline_str(char *str)
 {
