@@ -449,6 +449,7 @@ void find(const char *search, int show_password, int auto_encrypt)
         return;
     }
 
+    //TODO: This method should return a list
     db_find(search, show_password);
 
     if(auto_encrypt == 1)

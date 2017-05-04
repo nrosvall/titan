@@ -1,7 +1,7 @@
 .\" Manpage for titan.
 .\" Any errors or typos, contact niko@byteptr.com.
 
-.TH man 1 "29 Apr 2017" "1.1" "titan man page"
+.TH man 1 "5 May 2017" "1.2" "titan man page"
 .SH NAME
 titan \- command line password manager
 .SH SYNOPSIS
@@ -72,6 +72,10 @@ Add an entry to an open database:
 .PP
 If you want to export all entries to a file:
        titan --show-passwords -A > file.txt
+.SH COLORS
+Titan supports colored output. To use colors, set an environment variable
+TITAN_COLOR with one of the following value:
+BLUE, RED, GREEN, YELLOW, MAGENTA, CYAN or WHITE.
 .SH NOTES
 Titan does not have a concept of "change the master password". When you encrypt
 an open database using --encrypt you can type a master password. This password

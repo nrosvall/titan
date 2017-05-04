@@ -13,22 +13,58 @@
 #include "utils.h"
 #include "crypto.h"
 
+#define COLOR_DEFAULT "\x1B[0m"
+
+static char *get_output_color()
+{
+    char *color = getenv("TITAN_COLOR");
+
+    if(color == NULL)
+        return COLOR_DEFAULT;
+
+    if(strcmp(color, "BLUE") == 0)
+        return "\x1B[34m";
+    else if(strcmp(color, "RED") == 0)
+        return "\x1B[31m";
+    else if(strcmp(color, "GREEN") == 0)
+        return "\x1B[32m";
+    else if(strcmp(color, "YELLOW") == 0)
+        return "\x1B[33m";
+    else if(strcmp(color, "MAGENTA") == 0)
+        return "\x1B[35m";
+    else if(strcmp(color, "CYAN") == 0)
+        return "\x1B[36m";
+    else if(strcmp(color, "WHITE") == 0)
+        return "\x1B[37m";
+    else
+        return COLOR_DEFAULT; /* Handle empty variable too */
+}
 
 bool print_entry(Entry_t *entry, int show_password)
 {
+    char *color = get_output_color();
+
     fprintf(stdout, "=====================================================================\n");
-    fprintf(stdout, "ID: %d\n",        entry->id);
-    fprintf(stdout, "Title: %s\n",     entry->title);
-    fprintf(stdout, "User: %s\n",      entry->user);
-    fprintf(stdout, "Url: %s\n",       entry->url);
+
+    /* Set the color */
+    fprintf(stdout, "%s", color);
+
+    fprintf(stdout, "ID: %d\n", entry->id);
+    fprintf(stdout, "Title: %s\n", entry->title);
+    fprintf(stdout, "User: %s\n", entry->user);
+    fprintf(stdout, "Url: %s\n", entry->url);
 
     if(show_password == 1)
         fprintf(stdout, "Password: %s\n", entry->password);
     else
         fprintf(stdout, "Password: **********\n");
 
-    fprintf(stdout, "Notes: %s\n",     entry->notes);
-    fprintf(stdout, "Modified: %s\n",  entry->stamp);
+    fprintf(stdout, "Notes: %s\n", entry->notes);
+    fprintf(stdout, "Modified: %s\n", entry->stamp);
+
+    /* Reset the color */
+    fprintf(stdout, "%s", COLOR_DEFAULT);
+
     fprintf(stdout, "=====================================================================\n");
 
     return 0;
