@@ -420,6 +420,10 @@ void list_all(int show_password, int auto_encrypt)
     }
 
     Entry_t *entry = db_get_list();
+
+    if(!entry)
+        return;
+
     /* Because of how sqlite callbacks work, we need to initialize the list with dummy data.
      * Skip the dummy data to the next entry in the list
      */
@@ -449,11 +453,23 @@ void find(const char *search, int show_password, int auto_encrypt)
         return;
     }
 
-    //TODO: This method should return a list
-    db_find(search, show_password);
+    Entry_t *list = db_find(search);
+
+    if(!list)
+        return;
+
+    Entry_t *head = list->next;
+
+    while(head != NULL)
+    {
+        print_entry(head, show_password);
+        head = head->next;
+    }
 
     if(auto_encrypt == 1)
         auto_enc();
+
+    entry_free(list);
 }
 
 void find_regex(const char *regex, int show_password)

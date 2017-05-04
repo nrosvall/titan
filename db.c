@@ -17,7 +17,7 @@
 static int cb_check_integrity(void *notused, int argc, char **argv, char **column_name);
 static int cb_get_by_id(void *entry, int argc, char **argv, char **column_name);
 static int cb_list_all(void *entry, int argc, char **argv, char **column_name);
-static int cb_find(void *show_password, int argc, char **argv, char **column_name);
+static int cb_find(void *entry, int argc, char **argv, char **column_name);
 
 /*Run integrity check for the database to detect
  *malformed and corrupted databases. Returns true
@@ -400,7 +400,7 @@ Entry_t *db_get_list()
     return entry;
 }
 
-bool db_find(const char *search, int show_password)
+Entry_t *db_find(const char *search)
 {
     char *path = NULL;
     char *err = NULL;
@@ -411,7 +411,7 @@ bool db_find(const char *search, int show_password)
     if(!path)
     {
         fprintf(stderr, "Error getting database path\n");
-        return false;
+        return NULL;
     }
 
     if(!db_check_integrity(path))
@@ -419,7 +419,7 @@ bool db_find(const char *search, int show_password)
         fprintf(stderr, "Corrupted database. Abort.\n");
         free(path);
 
-        return false;
+        return NULL;
     }
 
     int rc = sqlite3_open(path, &db);
@@ -430,8 +430,11 @@ bool db_find(const char *search, int show_password)
         sqlite3_close(db);
         free(path);
 
-        return false;
+        return NULL;
     }
+
+    /* Fill our list with dummy data */
+    Entry_t *entry = entry_new("dummy", "dummy", "dummy", "dummy", "dummy");
 
     /* Search the same search term from each column we're might be interested in. */
     char *query = sqlite3_mprintf("select * from entries where title like '%%%q%%' "
@@ -439,7 +442,7 @@ bool db_find(const char *search, int show_password)
                                   "or url like '%%%q%%' "
                                   "or notes like '%%%q%%';", search, search, search, search);
 
-    rc = sqlite3_exec(db, query, cb_find, &show_password, &err);
+    rc = sqlite3_exec(db, query, cb_find, entry, &err);
 
     if(rc != SQLITE_OK)
     {
@@ -449,14 +452,14 @@ bool db_find(const char *search, int show_password)
         sqlite3_close(db);
         free(path);
 
-        return false;
+        return NULL;
     }
 
     sqlite3_free(query);
     sqlite3_close(db);
     free(path);
 
-    return true;
+    return entry;
 }
 
 static int cb_check_integrity(void *notused, int argc, char **argv, char **column_name)
@@ -484,26 +487,11 @@ static int cb_list_all(void *entry, int argc, char **argv, char **column_name)
     return 0;
 }
 
-static int cb_find(void *show_password, int argc, char **argv, char **column_name)
+static int cb_find(void *entry, int argc, char **argv, char **column_name)
 {
-
-    fprintf(stdout, "=====================================================================\n");
-    fprintf(stdout, "ID: %s\n",        argv[0]);
-    fprintf(stdout, "Title: %s\n",     argv[1]);
-    fprintf(stdout, "User: %s\n",      argv[2]);
-    fprintf(stdout, "Url: %s\n",       argv[3]);
-
-    int defer = *(int *)show_password;
-
-    if(defer == 1)
-        fprintf(stdout, "Password: %s\n", argv[4]);
-    else
-        fprintf(stdout, "Password: **********\n");
-
-    fprintf(stdout, "Notes: %s\n",     argv[5]);
-    fprintf(stdout, "Modified: %s\n",  argv[6]);
-
-    fprintf(stdout, "=====================================================================\n");
+    Entry_t *one_entry = entry_add(entry, argv[1], argv[2], argv[3], argv[4], argv[5]);
+    one_entry->id = atoi(argv[0]);
+    one_entry->stamp = strdup(argv[6]);
 
     return 0;
 }
