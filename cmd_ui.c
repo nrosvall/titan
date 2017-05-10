@@ -17,6 +17,7 @@
 #include "crypto.h"
 #include "pwd-gen.h"
 #include "regexfind.h"
+#include "shell.h"
 
 /*Removes new line character from a string.*/
 static void strip_newline_str(char *str)
@@ -519,4 +520,9 @@ void set_use_db(const char *path)
     }
 
     write_active_database_path(path);
+}
+
+void init_shell()
+{
+    shell_init();
 }

@@ -17,7 +17,7 @@ static int show_password = 0;
 static int force = 0;
 static int auto_encrypt = 0;
 
-static double v = 1.1;
+static double v = 1.2;
 
 static void version()
 {
@@ -45,6 +45,7 @@ OPTIONS\n\
     -c --edit         <id>           Edit entry pointed by id\n\
     -l --list-entry   <id>           List entry pointed by id\n\
     -A --list-all                    List all entries\n\
+    -S --shell                       Start Titan command shell interface\n\
     -h --help                        Show short help and exit. This page\n\
     -g --gen-password <length>       Generate password\n\
     -q --quick        <search>       This is the same as running\n\
@@ -95,6 +96,7 @@ int main(int argc, char *argv[])
             {"help",                  no_argument,       0, 'h'},
             {"version",               no_argument,       0, 'V'},
             {"show-db-path",          no_argument,       0, 's'},
+            {"shell",                 no_argument,       0, 'S'},
             {"gen-password",          required_argument, 0, 'g'},
             {"quick",                 required_argument, 0, 'q'},
             {"auto-encrypt",          no_argument,       &auto_encrypt,  1},
@@ -129,6 +131,9 @@ int main(int argc, char *argv[])
             break;
         case 's':
             show_current_db_path();
+            break;
+        case 'S':
+            init_shell();
             break;
         case 'h':
             usage();
