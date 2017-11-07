@@ -20,4 +20,6 @@ void init_shell();
 bool decrypt_database(const char *path);
 bool encrypt_database();
 
+bool encrypt_any_file(const char *path);
+
 #endif

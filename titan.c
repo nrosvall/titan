@@ -33,31 +33,32 @@ SYNOPSIS\n\
 \n\
 OPTIONS\n\
 \n\
-    -i --init                      <path>         Initialize new database\n\
-    -e --encrypt                                  Encrypt current database\n\
+    -i --init                <path>         Initialize new database\n\
+    -e --encrypt                            Encrypt current database\n\
+    -E --encrypt-file        <path>         Encrypt any file using strong encryption\n\
     -d --decrypt             <path>         Decrypt database\n\
-    -a --add                                         Add new entry\n\
-    -s --show-db-path                        Show current database path\n\
-    -u --use-db               <path>         Switch using another database\n\
-    -r --remove              <id>             Remove entry pointed by id\n\
-    -f --find                    <search>      Search entries\n\
-    -F --regex                <search>      Search entries with regular expressions\n\
-    -c --edit                   <id>               Edit entry pointed by id\n\
-    -l --list-entry           <id>               List entry pointed by id\n\
-    -A --list-all                                     List all entries\n\
-    -h --help                                         Show short help and exit. This page\n\
-    -g --gen-password <length>       Generate password\n\
-    -q --quick                <search>       This is the same as running\n\
-                                     --auto-encrypt --show-passwords -f\n\
+    -a --add                                Add new entry\n\
+    -s --show-db-path                       Show current database path\n\
+    -u --use-db              <path>         Switch using another database\n\
+    -r --remove              <id>           Remove entry pointed by id\n\
+    -f --find                <search>       Search entries\n\
+    -F --regex               <search>       Search entries with regular expressions\n\
+    -c --edit                <id>           Edit entry pointed by id\n\
+    -l --list-entry          <id>           List entry pointed by id\n\
+    -A --list-all                           List all entries\n\
+    -h --help                               Show short help and exit. This page\n\
+    -g --gen-password        <length>       Generate password\n\
+    -q --quick               <search>       This is the same as running\n\
+                                            --auto-encrypt --show-passwords -f\n\
 \n\
-    -V --version                           Show version number of program\n\
+    -V --version                            Show version number of program\n\
 \n\
 FLAGS\n\
 \n\
-    --auto-encrypt                     Automatically encrypt after exit\n\
-    --show-passwords              Show passwords in listings\n\
-    --force                                  Ignore everything and force operation\n\
-                                                 --force only works with --init option\n\
+    --auto-encrypt                          Automatically encrypt after exit\n\
+    --show-passwords                        Show passwords in listings\n\
+    --force                                 Ignore everything and force operation\n\
+                                            --force only works with --init option\n\
 \n\
 For more information and examples see man titan(1).\n\
 \n\
@@ -84,6 +85,7 @@ int main(int argc, char *argv[])
             {"init",                  required_argument, 0, 'i'},
             {"decrypt",               required_argument, 0, 'd'},
             {"encrypt",               no_argument,       0, 'e'},
+            {"encrypt-file",          required_argument, 0, 'E'},
             {"add",                   no_argument,       0, 'a'},
             {"remove",                required_argument, 0, 'r'},
             {"find",                  required_argument, 0, 'f'},
@@ -105,7 +107,7 @@ int main(int argc, char *argv[])
 
         int option_index = 0;
 
-        c = getopt_long(argc, argv, "i:d:ear:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
+        c = getopt_long(argc, argv, "i:d:eE:ar:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
 
         if(c == -1)
             break;
@@ -123,6 +125,9 @@ int main(int argc, char *argv[])
             break;
         case 'e': //encrypt
             encrypt_database();
+            break;
+        case 'E':
+            encrypt_any_file(optarg);
             break;
         case 'a':
             add_new_entry(auto_encrypt);

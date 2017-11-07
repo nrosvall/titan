@@ -211,6 +211,30 @@ bool encrypt_database()
     return true;
 }
 
+
+//TODO: This function should not look for database path (see encrypt_file?)
+//Also we should probably use some other extension than the default one, for
+//normal files. maybe foo.txt.titan for example?
+bool encrypt_any_file(const char *path)
+{
+    size_t pwdlen = 1024;
+    char pass[pwdlen];
+    char *ptr = pass;
+    char pass2[pwdlen];
+    char *ptr2 = pass2;
+
+    my_getpass("Password: ", &ptr, &pwdlen, stdin);
+    my_getpass("Password again: ", &ptr2, &pwdlen, stdin);
+
+    if(!encrypt_file(pass, path))
+    {
+        fprintf(stderr, "Encryption of %s failed.\n", path);
+        return false;
+    }
+
+    return true;
+}
+
 /* Interactively adds a new entry to the database */
 bool add_new_entry(int auto_encrypt)
 {
