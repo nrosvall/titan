@@ -1,7 +1,7 @@
 .\" Manpage for titan.
 .\" Any errors or typos, contact niko@byteptr.com.
 
-.TH man 1 "5 May 2017" "1.2" "titan man page"
+.TH man 1 "8 Nov 2017" "1.2" "titan man page"
 .SH NAME
 titan \- command line password manager
 .SH SYNOPSIS
@@ -14,8 +14,12 @@ operating systems.
 Initialize new database
 .IP "-e, --encrypt"
 Encrypt current database
+.IP "-E, --encrypt-file"
+Encrypt a file using strong encryption
 .IP "-d, --decrypt <path>"
 Decrypt database
+.IP "-D, --decrypt-file"
+Decrypt a file encrypted with Titan
 .IP "-a, --add"
 Add new entry
 .IP "-a, --add -I"
@@ -72,6 +76,10 @@ Add an entry to an open database:
 .PP
 If you want to export all entries to a file:
        titan --show-passwords -A > file.txt
+.PP
+Encrypting individual files. Since version 1.2 Titan also supports encryption
+of individual files. For example to encrypt a file using Titan:
+       titan --encrypt-file /home/niko/mysecretdocument.odt
 .SH COLORS
 Titan supports colored output. To use colors, set an environment variable
 TITAN_COLOR with one of the following value:

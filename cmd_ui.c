@@ -211,10 +211,6 @@ bool encrypt_database()
     return true;
 }
 
-
-//TODO: This function should not look for database path (see encrypt_file?)
-//Also we should probably use some other extension than the default one, for
-//normal files. maybe foo.txt.titan for example?
 bool encrypt_any_file(const char *path)
 {
     size_t pwdlen = 1024;
@@ -226,9 +222,32 @@ bool encrypt_any_file(const char *path)
     my_getpass("Password: ", &ptr, &pwdlen, stdin);
     my_getpass("Password again: ", &ptr2, &pwdlen, stdin);
 
+    if(strcmp(pass, pass2) != 0)
+    {
+        fprintf(stderr, "Password mismatch.\n");
+        return false;
+    }
+
     if(!encrypt_file(pass, path))
     {
         fprintf(stderr, "Encryption of %s failed.\n", path);
+        return false;
+    }
+
+    return true;
+}
+
+bool decrypt_any_file(const char *path)
+{
+    size_t pwdlen = 1024;
+    char pass[pwdlen];
+    char *ptr = pass;
+
+    my_getpass("Password: ", &ptr, &pwdlen, stdin);
+
+    if(!decrypt_file(pass, path))
+    {
+        fprintf(stderr, "Decryption of %s failed.\n", path);
         return false;
     }
 

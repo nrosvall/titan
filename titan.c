@@ -34,9 +34,10 @@ SYNOPSIS\n\
 OPTIONS\n\
 \n\
     -i --init                <path>         Initialize new database\n\
-    -e --encrypt                            Encrypt current database\n\
-    -E --encrypt-file        <path>         Encrypt any file using strong encryption\n\
-    -d --decrypt             <path>         Decrypt database\n\
+    -e --encrypt                            Encrypt the current password database\n\
+    -E --encrypt-file        <path>         Encrypt a file using strong encryption\n\
+    -d --decrypt             <path>         Decrypt password database\n\
+    -D --decrypt-file        <path>         Decrypt a file encrypted with Titan\n\
     -a --add                                Add new entry\n\
     -s --show-db-path                       Show current database path\n\
     -u --use-db              <path>         Switch using another database\n\
@@ -84,6 +85,7 @@ int main(int argc, char *argv[])
         {
             {"init",                  required_argument, 0, 'i'},
             {"decrypt",               required_argument, 0, 'd'},
+            {"decrypt-file",          required_argument, 0, 'D'},
             {"encrypt",               no_argument,       0, 'e'},
             {"encrypt-file",          required_argument, 0, 'E'},
             {"add",                   no_argument,       0, 'a'},
@@ -107,7 +109,7 @@ int main(int argc, char *argv[])
 
         int option_index = 0;
 
-        c = getopt_long(argc, argv, "i:d:eE:ar:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
+        c = getopt_long(argc, argv, "i:d:D:eE:ar:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
 
         if(c == -1)
             break;
@@ -122,6 +124,9 @@ int main(int argc, char *argv[])
             break;
         case 'd': //decrypt
             decrypt_database(optarg);
+            break;
+        case 'D':
+            decrypt_any_file(optarg);
             break;
         case 'e': //encrypt
             encrypt_database();
