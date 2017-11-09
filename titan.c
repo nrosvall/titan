@@ -36,8 +36,10 @@ OPTIONS\n\
     -i --init                <path>         Initialize new database\n\
     -e --encrypt                            Encrypt the current password database\n\
     -E --encrypt-file        <path>         Encrypt a file using strong encryption\n\
+    -w --encrypt-directory   <path>         Encrypt all files in the directory\n\
     -d --decrypt             <path>         Decrypt password database\n\
     -D --decrypt-file        <path>         Decrypt a file encrypted with Titan\n\
+    -W --decrypt-directory   <path>         Decrypt all files in the directory\n\
     -a --add                                Add new entry\n\
     -s --show-db-path                       Show current database path\n\
     -u --use-db              <path>         Switch using another database\n\
@@ -86,8 +88,10 @@ int main(int argc, char *argv[])
             {"init",                  required_argument, 0, 'i'},
             {"decrypt",               required_argument, 0, 'd'},
             {"decrypt-file",          required_argument, 0, 'D'},
+            {"decrypt-directory",     required_argument, 0, 'W'},
             {"encrypt",               no_argument,       0, 'e'},
             {"encrypt-file",          required_argument, 0, 'E'},
+            {"encrypt-directory",     required_argument, 0, 'w'},
             {"add",                   no_argument,       0, 'a'},
             {"remove",                required_argument, 0, 'r'},
             {"find",                  required_argument, 0, 'f'},
@@ -109,7 +113,7 @@ int main(int argc, char *argv[])
 
         int option_index = 0;
 
-        c = getopt_long(argc, argv, "i:d:D:eE:ar:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
+        c = getopt_long(argc, argv, "i:d:D:W:eE:w:ar:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
 
         if(c == -1)
             break;
@@ -133,6 +137,12 @@ int main(int argc, char *argv[])
             break;
         case 'E':
             encrypt_any_file(optarg);
+            break;
+        case 'w':
+            encrypt_directory(optarg);
+            break;
+        case 'W':
+            decrypt_directory(optarg);
             break;
         case 'a':
             add_new_entry(auto_encrypt);

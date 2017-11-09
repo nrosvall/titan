@@ -254,6 +254,20 @@ bool decrypt_any_file(const char *path)
     return true;
 }
 
+bool encrypt_directory(const char *path)
+{
+    //TODO: Implement, directory_walker.c/h. Should we use a function pointer
+    //for directory_walk(path, funcptr, bool encrypt/decrypt)?
+    return true;
+}
+
+bool decrypt_directory(const char *path)
+{
+
+    //TODO: Implement
+    return true;
+}
+
 /* Interactively adds a new entry to the database */
 bool add_new_entry(int auto_encrypt)
 {

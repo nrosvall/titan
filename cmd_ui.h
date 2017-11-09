@@ -23,4 +23,7 @@ bool encrypt_database();
 bool encrypt_any_file(const char *path);
 bool decrypt_any_file(const char *path);
 
+bool encrypt_directory(const char *path);
+bool decrypt_directory(const char *path);
+
 #endif
