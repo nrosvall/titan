@@ -17,6 +17,7 @@
 #include "crypto.h"
 #include "pwd-gen.h"
 #include "regexfind.h"
+#include "directory_walker.h"
 
 /*Removes new line character from a string.*/
 static void strip_newline_str(char *str)
@@ -256,15 +257,40 @@ bool decrypt_any_file(const char *path)
 
 bool encrypt_directory(const char *path)
 {
-    //TODO: Implement, directory_walker.c/h. Should we use a function pointer
-    //for directory_walk(path, funcptr, bool encrypt/decrypt)?
+    actiononfile action;
+    size_t pwdlen = 1024;
+    char pass[pwdlen];
+    char *ptr = pass;
+    char pass2[pwdlen];
+    char *ptr2 = pass2;
+
+    my_getpass("Password: ", &ptr, &pwdlen, stdin);
+    my_getpass("Password again: ", &ptr2, &pwdlen, stdin);
+
+    if(strcmp(pass, pass2) != 0)
+    {
+        fprintf(stderr, "Password mismatch.\n");
+        return false;
+    }
+
+    action = encrypt_file;
+    dir_walk(path, action, pass);
+
     return true;
 }
 
 bool decrypt_directory(const char *path)
 {
+    size_t pwdlen = 1024;
+    char pass[pwdlen];
+    char *ptr = pass;
+    actiononfile action;
 
-    //TODO: Implement
+    my_getpass("Password: ", &ptr, &pwdlen, stdin);
+
+    action = decrypt_file;
+    dir_walk(path, action, pass);
+
     return true;
 }
 

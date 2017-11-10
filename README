@@ -3,6 +3,9 @@ Titan - Command line password manager
 Password management belongs to the command line, deep into the Unix heartland,
 the shell. Titan is written in C.
 
+Titan is more than "just a password manager". It also supports encrypting
+individual files so Titan can be used as a file encryption program as well
+as a password manager.
+
 For more information, see homepage https://www.titanpasswordmanager.org or/and
 join irc channel #titanpasswordmanager@Freenode.
-
