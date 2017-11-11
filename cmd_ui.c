@@ -273,7 +273,7 @@ bool encrypt_directory(const char *path)
         return false;
     }
 
-    action = encrypt_file;
+    action = &encrypt_file;
     dir_walk(path, action, pass);
 
     return true;
@@ -288,7 +288,7 @@ bool decrypt_directory(const char *path)
 
     my_getpass("Password: ", &ptr, &pwdlen, stdin);
 
-    action = decrypt_file;
+    action = &decrypt_file;
     dir_walk(path, action, pass);
 
     return true;
@@ -507,7 +507,8 @@ void list_all(int show_password, int auto_encrypt)
     if(!entry)
         return;
 
-    /* Because of how sqlite callbacks work, we need to initialize the list with dummy data.
+    /* Because of how sqlite callbacks work, we need to initialize
+     * the list with dummy data.
      * Skip the dummy data to the next entry in the list
      */
     Entry_t *head = entry->next;
