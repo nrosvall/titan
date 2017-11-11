@@ -1,7 +1,7 @@
 .\" Manpage for titan.
 .\" Any errors or typos, contact niko@byteptr.com.
 
-.TH man 1 "8 Nov 2017" "1.2" "titan man page"
+.TH man 1 "11 Nov 2017" "1.2" "titan man page"
 .SH NAME
 titan \- command line password manager
 .SH SYNOPSIS
@@ -17,10 +17,14 @@ Initialize new database
 Encrypt current database
 .IP "-E, --encrypt-file"
 Encrypt a file using strong encryption
+.IP "-w  --encrypt-directory"
+Encrypt all files in the directory
 .IP "-d, --decrypt <path>"
 Decrypt database
 .IP "-D, --decrypt-file"
 Decrypt a file encrypted with Titan
+.IP "-W, --decrypt-directory"
+Decrypt all files in the directory
 .IP "-a, --add"
 Add new entry
 .IP "-a, --add -I"
@@ -90,6 +94,8 @@ Titan does not have a concept of "change the master password". When you encrypt
 an open database using --encrypt you can type a master password. This password
 is then  required to decrypt the database. You can change the master password
 everytime when you encrypt the database, if you want to.
+
+Directory encryption is not recursive, this will change in the future versions.
 .SH FILES
 .I $HOME/.titan.lock
 .SH AUTHORS
