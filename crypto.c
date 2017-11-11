@@ -386,7 +386,7 @@ bool decrypt_file(const char *passphrase, const char *path)
 
     if(!is_file_encrypted(path))
     {
-        fprintf(stderr, "File is already decrypted or malformed.\n");
+        fprintf(stderr, "File is already decrypted or malformed?\n");
         return false;
     }
 
