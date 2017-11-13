@@ -54,6 +54,7 @@ void dir_walk(const char *path, actiononfile action, const char *pass)
                 if(action(pass, fullpath))
                 {
                     fprintf(stdout, "#");
+                    fflush(stdout);
                     count++;
                 }
 
