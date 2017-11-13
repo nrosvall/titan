@@ -1,0 +1,5 @@
+Release 1.2 (2017-11-14)
+        *Support for colors. See man titan(1) for more information.
+        *Added Support encrypting individual files
+        *Added support for encrypting directories
+        *Many smaller internal changes and bug fixes
