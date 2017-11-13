@@ -58,7 +58,8 @@ static void generate_new_password(char *in_buffer)
  *Usually stream is stdin. Returns length of the passphrase,
  *passphrase is stored to lineptr. Lineptr must be allocated beforehand.
  */
-static size_t my_getpass(char *prompt, char **lineptr, size_t *n, FILE *stream)
+static size_t my_getpass(char *prompt, char **lineptr, size_t *n,
+                         FILE *stream)
 {
     struct termios old, new;
     int nread;
