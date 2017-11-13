@@ -33,35 +33,35 @@ SYNOPSIS\n\
 \n\
 OPTIONS\n\
 \n\
-    -i --init                <path>         Initialize new database\n\
-    -e --encrypt                            Encrypt the current password database\n\
-    -E --encrypt-file        <path>         Encrypt a file using strong encryption\n\
-    -w --encrypt-directory   <path>         Encrypt all files in the directory\n\
-    -d --decrypt             <path>         Decrypt password database\n\
-    -D --decrypt-file        <path>         Decrypt a file encrypted with Titan\n\
-    -W --decrypt-directory   <path>         Decrypt all files in the directory\n\
-    -a --add                                Add new entry\n\
-    -s --show-db-path                       Show current database path\n\
-    -u --use-db              <path>         Switch using another database\n\
-    -r --remove              <id>           Remove entry pointed by id\n\
-    -f --find                <search>       Search entries\n\
-    -F --regex               <search>       Search entries with regular expressions\n\
-    -c --edit                <id>           Edit entry pointed by id\n\
-    -l --list-entry          <id>           List entry pointed by id\n\
-    -A --list-all                           List all entries\n\
-    -h --help                               Show short help and exit. This page\n\
-    -g --gen-password        <length>       Generate password\n\
-    -q --quick               <search>       This is the same as running\n\
-                                            --auto-encrypt --show-passwords -f\n\
+    -i --init                <path>   Initialize new database\n\
+    -e --encrypt                      Encrypt the current password database\n\
+    -E --encrypt-file        <path>   Encrypt a file using strong encryption\n\
+    -w --encrypt-directory   <path>   Encrypt all files in the directory\n\
+    -d --decrypt             <path>   Decrypt password database\n\
+    -D --decrypt-file        <path>   Decrypt a file encrypted with Titan\n\
+    -W --decrypt-directory   <path>   Decrypt all files in the directory\n\
+    -a --add                          Add new entry\n\
+    -s --show-db-path                 Show current database path\n\
+    -u --use-db              <path>   Switch using another database\n\
+    -r --remove              <id>     Remove entry pointed by id\n\
+    -f --find                <search> Search entries\n\
+    -F --regex               <search> Search entries with regular expressions\n\
+    -c --edit                <id>     Edit entry pointed by id\n\
+    -l --list-entry          <id>     List entry pointed by id\n\
+    -A --list-all                     List all entries\n\
+    -h --help                         Show short help and exit. This page\n\
+    -g --gen-password        <length> Generate password\n\
+    -q --quick               <search> This is the same as running\n\
+                                      --auto-encrypt --show-passwords -f\n\
 \n\
-    -V --version                            Show version number of program\n\
+    -V --version                      Show version number of program\n\
 \n\
 FLAGS\n\
 \n\
-    --auto-encrypt                          Automatically encrypt after exit\n\
-    --show-passwords                        Show passwords in listings\n\
-    --force                                 Ignore everything and force operation\n\
-                                            --force only works with --init option\n\
+    --auto-encrypt                    Automatically encrypt after exit\n\
+    --show-passwords                  Show passwords in listings\n\
+    --force                           Ignore everything and force operation\n\
+                                      --force only works with --init option\n\
 \n\
 For more information and examples see man titan(1).\n\
 \n\
@@ -113,7 +113,8 @@ int main(int argc, char *argv[])
 
         int option_index = 0;
 
-        c = getopt_long(argc, argv, "i:d:D:W:eE:w:ar:f:F:c:l:Asu:hVg:q:", long_options, &option_index);
+        c = getopt_long(argc, argv, "i:d:D:W:eE:w:ar:f:F:c:l:Asu:hVg:q:",
+                        long_options, &option_index);
 
         if(c == -1)
             break;
