@@ -3,7 +3,7 @@
  */
 
 /* To get DT_REG */
-#define _DEFAULT_SOURCE
+#define _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
