@@ -8,5 +8,6 @@
 typedef bool (*actiononfile)(const char *, const char *);
 
 void dir_walk(const char *path, actiononfile action, const char *pass);
+void dir_walk_recursive(const char *path, actiononfile action, const char *pass);
 
 #endif

@@ -70,3 +70,9 @@ void dir_walk(const char *path, actiononfile action, const char *pass)
         fprintf(stderr, "Unable to open directory %s.\n", path);
     }
 }
+
+void dir_walk_recursive(const char *path, actiononfile action, const char *pass)
+{
+
+
+}
