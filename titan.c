@@ -52,7 +52,7 @@ OPTIONS\n\
     -h --help                         Show short help and exit. This page\n\
     -g --gen-password        <length> Generate password\n\
     -q --quick               <search> This is the same as running\n\
-                                      --auto-encrypt --show-passwords -f\n\
+                                      --show-passwords -f\n\
 \n\
     -V --version                      Show version number of program\n\
 \n\
@@ -181,7 +181,6 @@ int main(int argc, char *argv[])
             generate_password(atoi(optarg));
             break;
         case 'q':
-            auto_encrypt = 1;
             show_password = 1;
             find(optarg, show_password, auto_encrypt);
             break;
