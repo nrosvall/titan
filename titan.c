@@ -48,6 +48,7 @@ OPTIONS\n\
     -F --regex               <search> Search entries with regular expressions\n\
     -c --edit                <id>     Edit entry pointed by id\n\
     -l --list-entry          <id>     List entry pointed by id\n\
+    -t --show-latest         <count>  Show latest <count> entries\n\
     -A --list-all                     List all entries\n\
     -h --help                         Show short help and exit. This page\n\
     -g --gen-password        <length> Generate password\n\
@@ -105,6 +106,7 @@ int main(int argc, char *argv[])
             {"show-db-path",          no_argument,       0, 's'},
             {"gen-password",          required_argument, 0, 'g'},
             {"quick",                 required_argument, 0, 'q'},
+            {"show-latest",           required_argument, 0, 't'},
             {"auto-encrypt",          no_argument,       &auto_encrypt,  1},
             {"show-passwords",        no_argument,       &show_password, 1},
             {"force",                 no_argument,       &force, 1},
@@ -183,6 +185,9 @@ int main(int argc, char *argv[])
         case 'q':
             show_password = 1;
             find(optarg, show_password, auto_encrypt);
+            break;
+        case 't':
+            show_latest_entries(atoi(optarg));
             break;
         case '?':
             usage();

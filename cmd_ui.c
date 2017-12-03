@@ -605,3 +605,8 @@ void set_use_db(const char *path)
 
     write_active_database_path(path);
 }
+
+void show_latest_entries(int count)
+{
+
+}
