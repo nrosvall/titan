@@ -395,7 +395,7 @@ Entry_t *db_get_list(int count_latest)
     if(count_latest == -1)
         query = "select * from entries;";
     else
-        query = sqlite3_mprintf("select * from entries order by date(timestamp) desc limit %d", count_latest);
+        query = sqlite3_mprintf("select * from entries order by datetime(timestamp) desc limit %d", count_latest);
 
     rc = sqlite3_exec(db, query, cb_list_all, entry, &err);
 
