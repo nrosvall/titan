@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
             list_by_id(atoi(optarg), show_password, auto_encrypt);
             break;
         case 'A':
-            list_all(show_password, auto_encrypt);
+            list_all(show_password, auto_encrypt, -1);
             break;
         case 'V':
             version();
@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
             find(optarg, show_password, auto_encrypt);
             break;
         case 't':
-            show_latest_entries(atoi(optarg));
+            show_latest_entries(show_password, auto_encrypt, atoi(optarg));
             break;
         case '?':
             usage();

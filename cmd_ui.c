@@ -494,8 +494,11 @@ void list_by_id(int id, int show_password, int auto_encrypt)
         auto_enc();
 }
 
-/* Loop through all entries in the database and output them to stdout.*/
-void list_all(int show_password, int auto_encrypt)
+/* Loop through all entries in the database and output them to stdout.
+ * Latest count points out how many latest items we may want to show.
+ * If latest_count if -1, display all items.
+ */
+void list_all(int show_password, int auto_encrypt, int latest_count)
 {
     if(!has_active_database())
     {
@@ -503,7 +506,7 @@ void list_all(int show_password, int auto_encrypt)
         return;
     }
 
-    Entry_t *entry = db_get_list();
+    Entry_t *entry = db_get_list(latest_count);
 
     if(!entry)
         return;
@@ -559,7 +562,7 @@ void find(const char *search, int show_password, int auto_encrypt)
 
 void find_regex(const char *regex, int show_password)
 {
-    Entry_t *list = db_get_list();
+    Entry_t *list = db_get_list(-1);
     Entry_t *head = list->next;
 
     regex_find(head, regex, show_password);
@@ -606,7 +609,7 @@ void set_use_db(const char *path)
     write_active_database_path(path);
 }
 
-void show_latest_entries(int count)
+void show_latest_entries(int show_password, int auto_encrypt, int count)
 {
-
+    list_all(show_password, auto_encrypt, count);
 }

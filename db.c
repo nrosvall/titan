@@ -345,11 +345,22 @@ bool db_delete_entry(int id, bool *changes)
     return true;
 }
 
-Entry_t *db_get_list()
+/* Get latest count of entries pointed by count_latest.
+ * -1 to get everything.
+ */
+Entry_t *db_get_list(int count_latest)
 {
     char *path = NULL;
     char *err = NULL;
     sqlite3 *db;
+    char *query = NULL;
+
+    //TODO: Make a sanity check for the latest count. Should be >=0 or -1.
+    if(count_latest < 0 && count_latest != -1)
+    {
+        fprintf(stderr, "Invalid parameter <count>\n");
+        return NULL;
+    }
 
     path = read_active_database_path();
 
@@ -381,13 +392,22 @@ Entry_t *db_get_list()
     /* Fill our list with dummy data */
     Entry_t *entry = entry_new("dummy", "dummy", "dummy", "dummy", "dummy");
 
-    char *query = "select * from entries;";
+    /* Get all data or a defined count */
+    if(count_latest == -1)
+        query = "select * from entries;";
+    else
+        query = sqlite3_mprintf("select * from entries order by date(column) desc limit %d", count_latest);
+
     rc = sqlite3_exec(db, query, cb_list_all, entry, &err);
 
     if(rc != SQLITE_OK)
     {
         fprintf(stderr, "Error: %s\n", err);
         sqlite3_free(err);
+
+        if(count_latest != -1 && query != NULL)
+            sqlite3_free(query);
+
         sqlite3_close(db);
         free(path);
 
