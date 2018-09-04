@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
 
         int option_index = 0;
 
-        c = getopt_long(argc, argv, "i:d:D:W:eE:w:ar:f:F:c:l:Asu:hVg:q:",
+        c = getopt_long(argc, argv, "i:d:D:W:eE:w:ar:f:F:c:l:Asu:hVg:q:t:",
                         long_options, &option_index);
 
         if(c == -1)

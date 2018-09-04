@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>
+ * Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>
  */
 
 #define _XOPEN_SOURCE 700
@@ -355,7 +355,6 @@ Entry_t *db_get_list(int count_latest)
     sqlite3 *db;
     char *query = NULL;
 
-    //TODO: Make a sanity check for the latest count. Should be >=0 or -1.
     if(count_latest < 0 && count_latest != -1)
     {
         fprintf(stderr, "Invalid parameter <count>\n");
@@ -396,7 +395,7 @@ Entry_t *db_get_list(int count_latest)
     if(count_latest == -1)
         query = "select * from entries;";
     else
-        query = sqlite3_mprintf("select * from entries order by date(column) desc limit %d", count_latest);
+        query = sqlite3_mprintf("select * from entries order by date(timestamp) desc limit %d", count_latest);
 
     rc = sqlite3_exec(db, query, cb_list_all, entry, &err);
 
