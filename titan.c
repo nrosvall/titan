@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>
+ * Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>
  */
 
 #include <stdio.h>
@@ -17,7 +17,7 @@ static int show_password = 0;
 static int force = 0;
 static int auto_encrypt = 0;
 
-static double v = 1.2;
+static double v = 1.3;
 
 static void version()
 {
@@ -48,11 +48,12 @@ OPTIONS\n\
     -F --regex               <search> Search entries with regular expressions\n\
     -c --edit                <id>     Edit entry pointed by id\n\
     -l --list-entry          <id>     List entry pointed by id\n\
+    -t --show-latest         <count>  Show latest <count> entries\n\
     -A --list-all                     List all entries\n\
     -h --help                         Show short help and exit. This page\n\
     -g --gen-password        <length> Generate password\n\
     -q --quick               <search> This is the same as running\n\
-                                      --auto-encrypt --show-passwords -f\n\
+                                      --show-passwords -f\n\
 \n\
     -V --version                      Show version number of program\n\
 \n\
@@ -66,7 +67,7 @@ FLAGS\n\
 For more information and examples see man titan(1).\n\
 \n\
 AUTHORS\n\
-    Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>\n\
+    Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>\n\
 "
     printf(HELP);
 }
@@ -105,6 +106,7 @@ int main(int argc, char *argv[])
             {"show-db-path",          no_argument,       0, 's'},
             {"gen-password",          required_argument, 0, 'g'},
             {"quick",                 required_argument, 0, 'q'},
+            {"show-latest",           required_argument, 0, 't'},
             {"auto-encrypt",          no_argument,       &auto_encrypt,  1},
             {"show-passwords",        no_argument,       &show_password, 1},
             {"force",                 no_argument,       &force, 1},
@@ -172,7 +174,7 @@ int main(int argc, char *argv[])
             list_by_id(atoi(optarg), show_password, auto_encrypt);
             break;
         case 'A':
-            list_all(show_password, auto_encrypt);
+            list_all(show_password, auto_encrypt, -1);
             break;
         case 'V':
             version();
@@ -181,9 +183,11 @@ int main(int argc, char *argv[])
             generate_password(atoi(optarg));
             break;
         case 'q':
-            auto_encrypt = 1;
             show_password = 1;
             find(optarg, show_password, auto_encrypt);
+            break;
+        case 't':
+            show_latest_entries(show_password, auto_encrypt, atoi(optarg));
             break;
         case '?':
             usage();

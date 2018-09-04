@@ -1,7 +1,7 @@
 .\" Manpage for titan.
 .\" Any errors or typos, contact niko@byteptr.com.
 
-.TH man 1 "11 Nov 2017" "1.2" "titan man page"
+.TH man 1 "4 Sep 2018" "1.3" "titan man page"
 .SH NAME
 titan \- command line password manager
 .SH SYNOPSIS
@@ -45,6 +45,8 @@ Edit entry pointed by id
 Search database
 .IP "-l, --list-entry <id>"
 List entry pointed by id
+.IP "-t, --show-latest <count>"
+Show latest entries
 .IP "-A, --list-all"
 Show database statuses
 .IP "-V, --version"
@@ -53,7 +55,7 @@ Show program version
 Generate password
 .IP "-q, --quick <search>"
 This is the same as running
---auto-encrypt --show-passwords -f
+--show-passwords -f
 .IP "-h, --help"
 Show short help and exit
 .SH FLAGS
@@ -82,6 +84,9 @@ Add an entry to an open database:
 If you want to export all entries to a file:
        titan --show-passwords -A > file.txt
 .PP
+To show latest 10 entries:
+       titan --show-latest 10
+.PP
 Encrypting individual files. Since version 1.2 Titan also supports encryption
 of individual files. For example to encrypt a file using Titan:
        titan --encrypt-file /home/niko/mysecretdocument.odt
@@ -101,6 +106,6 @@ Directory encryption is not recursive, this will change in the future versions.
 .SH AUTHORS
 Written by Niko Rosvall.
 .SH COPYRIGHT
-Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>
+Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>
 .PP
 Released under MIT license.

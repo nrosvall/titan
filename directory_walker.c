@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>
+ * Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>
  */
 
 /* To get DT_REG */
-#define _DEFAULT_SOURCE
+#define _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,4 +69,10 @@ void dir_walk(const char *path, actiononfile action, const char *pass)
     {
         fprintf(stderr, "Unable to open directory %s.\n", path);
     }
+}
+
+void dir_walk_recursive(const char *path, actiononfile action, const char *pass)
+{
+
+
 }
