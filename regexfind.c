@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>
+ * Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>
  */
 
 #define _XOPEN_SOURCE 700

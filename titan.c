@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>
+ * Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>
  */
 
 #include <stdio.h>
@@ -17,7 +17,7 @@ static int show_password = 0;
 static int force = 0;
 static int auto_encrypt = 0;
 
-static double v = 1.2;
+static double v = 1.3;
 
 static void version()
 {
@@ -67,7 +67,7 @@ FLAGS\n\
 For more information and examples see man titan(1).\n\
 \n\
 AUTHORS\n\
-    Copyright (C) 2017 Niko Rosvall <niko@byteptr.com>\n\
+    Copyright (C) 2018 Niko Rosvall <niko@byteptr.com>\n\
 "
     printf(HELP);
 }
