@@ -1,8 +1,0 @@
-Release 1.3 (2018-09-04)
-        *Titan now supports custom count of listing latest entries
-
-Release 1.2 (2017-11-14)
-        *Support for colors. See man titan(1) for more information.
-        *Added Support encrypting individual files
-        *Added support for encrypting directories
-        *Many smaller internal changes and bug fixes
